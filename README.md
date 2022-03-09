@@ -13,11 +13,6 @@
   </p>
 </div>
 
----------------------------------------
-
-![image](https://cdn.discordapp.com/attachments/947600089101271082/948723490821906492/unknown.png)
-
----------------------------------------
 
 ### ❗・Importante
 * [python](https://python.org)
