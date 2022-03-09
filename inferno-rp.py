@@ -1,12 +1,14 @@
-from cgitb import Hook
-import discord
 import os
-from discord.ext import commands
-from asyncio import *
+import time
 import random
-from discord import colour
+import asyncio
+import discord
+import requests as rq
+from asyncio import *
 from discord import embeds
+from discord import colour
 from discord.ext import tasks
+from discord.ext import commands
 from discord.ext.commands.errors import DisabledCommand
 
 
@@ -20,9 +22,9 @@ colors = [0x01b8a1, 0xaa0e6c, 0x390174, 0xf6fa02, 0x5df306, 0x2206f3, 0xfffdfd, 
 class CONFIG:
     TOKEN = "" # Your Token
     PREFIX = "" # Your Prefix
-    hook = "" # your webhook(bug new update fixed)
-
-hook = CONFIG.hook
+    guildID = 0 #Your Discord Server ID
+    serverIP = ""#IP:PORT | Example: 127.0.0.1:30120
+    URl = "" #your discord icon
 
 client = commands.Bot(command_prefix=CONFIG.PREFIX)
 client.remove_command("help")
@@ -36,9 +38,14 @@ async def on_ready():
     for x in client.guilds:
         y += x.member_count
     print(f"Developer's {len(client.users)}, In {len(client.guilds)} Server's Is Rune:), See {y}+ Users!,  Bot Run Shod!")
-    activity_string = '>help💖'.format(len(client.guilds))
-    await client.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name=activity_string),status=discord.Status.dnd)
+    client.my_current_task = live_status.start()
 
+def pc():
+    try:
+        resp = rq.get('http://'+CONFIG.serverIP+'/players.json').json()
+        return(len(resp))
+    except:
+        return('N/A')
 
 #  run shodan Bot
 
@@ -295,11 +302,27 @@ async def ping(ctx):
     embed = discord.Embed(colour=random.choice(colors),description=f' Ping client Is :{round(client.latency * 1000)}MS')
     await ctx.send(embed=embed)
 
+@client.command(pass_content=True, aliases=['s'])
+@commands.has_permissions(administrator=True) 
+async def announce(ctx, *, text):
+    
+    try:
+        await ctx.message.delete()
+        timenow = time.strftime("%H:%M")
+        embed=discord.Embed(title="𝐢𝐧𝐟𝐞𝐫𝐧𝐨 𝐑𝐏t", description=" ", color=random.choices(colors))
+        embed.set_author(name="**Announcement**", icon_url=CONFIG.URl)
+        embed.set_thumbnail(url=ctx.message.author.avatar_url)
+        embed.add_field(name="Message:", value=text, inline=False)
+        embed.set_footer(text=f"Message By : {ctx.author.mention} {timenow}")
+        await ctx.send(embed=embed)
+    except Exception as err:
+        print(err)
+
 @client.command()
 async def help(ctx):
-    embed = discord.Embed(title="𝐢𝐧𝐟𝐞𝐫𝐧𝐨 𝐑𝐏",descriptiob="Prefix : >",colour=random.choice(colors))
-    embed.set_thumbnail(url="https://images-ext-1.discordapp.net/external/gJXQqDDGWPul8Z2N2m7YVg65SOcaHhWnHodWL_pgh6k/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/943673195523887184/98e5d643b64ebd72c458302d1ae489b8.webp")
-    embed.set_footer(text="𝐢𝐧𝐟𝐞𝐫𝐧𝐨 𝐑𝐏 | Developer : ! 001ᴿᶻ#0001", icon_url="https://images-ext-1.discordapp.net/external/gJXQqDDGWPul8Z2N2m7YVg65SOcaHhWnHodWL_pgh6k/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/943673195523887184/98e5d643b64ebd72c458302d1ae489b8.webp")
+    embed = discord.Embed(title="𝐢𝐧𝐟𝐞𝐫𝐧𝐨 𝐑𝐏",descriptiob=f"Prefix : {CONFIG.PREFIX}",colour=random.choice(colors))
+    embed.set_thumbnail(url=CONFIG.URl)
+    embed.set_footer(text="𝐢𝐧𝐟𝐞𝐫𝐧𝐨 𝐑𝐏 | Developer : ! 001ᴿᶻ#0001", icon_url=CONFIG.URl)
     embed.add_field(name="lock", value="```lock kardan```", inline=True)
     embed.add_field(name="unlock", value="```unlock kardan```", inline=True)
     embed.add_field(name="ban", value="```ban kardan```", inline=True)
@@ -352,6 +375,17 @@ async def on_command_error(ctx, error):
         )
         await ctx.reply(embed=embed)
 
+@tasks.loop()
+async def live_status(seconds=30):
+    pcount = pc()
+    Dis = client.get_guild(CONFIG.guildID) #Int
 
+    activity = discord.Activity(type=discord.ActivityType.watching, name=f'🐌 {pcount}/64')
+    await client.change_presence(activity=activity)
+    await asyncio.sleep(15)
+
+    activity = discord.Activity(type=discord.ActivityType.watching, name=f'👥 {Dis.member_count}')
+    await client.change_presence(activity=activity)
+    await asyncio.sleep(15)
 
 client.run(CONFIG.TOKEN)
