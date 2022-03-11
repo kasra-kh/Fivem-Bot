@@ -6,7 +6,7 @@
   <h2 align="center">Fivem Bot</h3>
 
   <p align="center">
-    Developer ! 001 thanks Radinpirouz For help me to make it :)
+     programmer ! 001 thanks Radinpirouz For help me to make it :)
     <br />
     <br />
   </p>
