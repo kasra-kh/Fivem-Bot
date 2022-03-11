@@ -6,14 +6,20 @@
   <h2 align="center">Fivem Bot</h3>
 
   <p align="center">
-    Fivem Discord Bot 
+    Developer ! 001 thanks Radinpirouz For help me to make it :)
     <br />
     <br />
     <a href="https://discord.gg/9X3DXTtB">Discord</a>
   </p>
 </div>
 
+### ❗・ Discord :)
+* [RedRoom](https://discord.gg/2PgJQzsrqD)
+* 
+* [AR community](https://discord.gg/SukHRHuFB4)
 
+* [Negative](https://discord.gg/9X3DXTtB)
+* 
 ### ❗・Importante
 * [python](https://python.org)
 ---------------------------------------
