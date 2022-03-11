@@ -86,6 +86,7 @@ async def on_member_join(member):
     welcome1_channel = guild1.get_channel(945613736226476033)
     embed1 = discord.Embed(title='welcome', description=f'Hey {member.mention} , welcome to Inferno Rp !\n Pls Check <#946364773304512593> Tnx', color=random.choice(colors)) 
     embed1.set_thumbnail(url=member.avatar_url)
+    embed1.set_image(url="https://cdn.discordapp.com/attachments/937871161616920626/951541043482992672/R.gif")
     embed1.set_footer(text='Welcome To Inferno',icon_url=config.icon)
     await welcome1_channel.send(embed=embed1)
 # Dastresi be $lock
