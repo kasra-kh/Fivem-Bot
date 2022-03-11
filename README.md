@@ -6,7 +6,7 @@
   <h2 align="center">Fivem Bot</h3>
 
   <p align="center">
-    Fivem Discord Bot Developer By kasra
+    Fivem Discord Bot 
     <br />
     <br />
     <a href="https://discord.gg/9X3DXTtB">Discord</a>
